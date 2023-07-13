@@ -26,7 +26,8 @@ async function insertData(){
   const insertResult = await collection.insertOne({id: autoIncrement, a: 1});
   console.log('저장 결과 =>', insertResult);
 }
-
+// const findData = await movies.findOne({id: 10});
+// console.log(findData._id.toString());
 app.get('/', function(req, res) { 
   res.render('index.ejs')
 })

@@ -7,8 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
-
+    
     <title>To Do List</title>
 
     <style>
@@ -30,9 +29,27 @@
         #list1 .select-input.form-control[readonly]:not([disabled]) {
             background-color: #fbfbfb;
         }
+        .picker{
+            border: none;
+            margin-right: 20px;
+        }
+        .picker::-webkit-datetime-edit{
+            display: none;
+        }
+        .picker::-webkit-calendar-picker-indicator{
+            width: 20px;
+            height: 20px;
+            background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Font_Awesome_5_solid_calendar-alt.svg/896px-Font_Awesome_5_solid_calendar-alt.svg.png");
+            filter: invert(46%) sepia(47%) saturate(852%) hue-rotate(179deg) brightness(82%) contrast(92%);
+        }   
+        .picker::-webkit-calendar-picker-indicator:focus-visible{
+            outline: none;
+            outline-offset: none;
+        }
     </style>
 </head>
 <body>
+    <input type="file">
     <section class="vh-100 " style="background-color:#eff1f2;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -48,11 +65,10 @@
                                     <div class="card-body py-3">
                                         <div class="d-flex flex-row align-items-center">
                                             <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="할 일을 입력해주세요">
-                                            <input style="opacity: 0;" type="text" id="datepicker" name="datepicker" readonly>
-                                            <label style="cursor: pointer;" for="datepicker">
-                                                <div class="pe-auto" data-mdb-toggle="tooltip" title="마감일 설정"><i style="color:#3b71ca" class="fas fa-calendar-alt fa-lg me-3"></i></div>
-                                            </label>
-                                            
+                                            <div class="pe-auto d-flex" data-mdb-toggle="tooltip" title="마감일 설정">
+                                                <input class="picker" type="date">
+                                            </div>
+
                                             <div>
                                                 <button type="button" class="btn btn-primary text-nowrap">추가하기</button>
                                             </div>
@@ -165,13 +181,6 @@
             </div>
         </div>
     </section>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
-    <script>
-        $(function() {
-            $("#datepicker").datepicker();
-        });
-    </script>
 </body>
 </html>
