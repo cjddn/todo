@@ -49,7 +49,6 @@
     </style>
 </head>
 <body>
-    <input type="file">
     <section class="vh-100 " style="background-color:#eff1f2;">
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -64,13 +63,13 @@
                                 <div class="card">
                                     <div class="card-body py-3">
                                         <div class="d-flex flex-row align-items-center">
-                                            <input type="text" class="form-control form-control-lg" id="exampleFormControlInput1" placeholder="할 일을 입력해주세요">
+                                            <input type="text" class="form-control form-control-lg todo-title" id="exampleFormControlInput1" placeholder="할 일을 입력해주세요">
                                             <div class="pe-auto d-flex" data-mdb-toggle="tooltip" title="마감일 설정">
-                                                <input class="picker" type="date">
+                                                <input class="picker due-date" type="date">
                                             </div>
 
                                             <div>
-                                                <button type="button" class="btn btn-primary text-nowrap">추가하기</button>
+                                                <button id="add-button" type="button" class="btn btn-primary text-nowrap">추가하기</button>
                                             </div>
                                         </div>
                                     </div>
@@ -182,5 +181,30 @@
         </div>
     </section>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+    <script>
+        const submitButton = document.getElementById('add-button');
+        submitButton.addEventListener('click',()=>{
+            const title = document.querySelector('.todo-title').value;
+            const dueDate = document.querySelector('.due-date').value;
+            const response = sendHttpRequest('POST', 'http://localhost:8080/post', {title:title, dueDate:dueDate}) 
+        })
+
+        async function sendHttpRequest(method, url = '', data = {}) {
+            const response = await fetch(url, {
+                method: method, 
+                mode: 'cors', 
+                cache: 'no-cache',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',
+                body: JSON.stringify(data),
+            });
+            return response.json();
+        }
+
+    </script>
 </body>
 </html>
