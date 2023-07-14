@@ -13,7 +13,7 @@ async function main() {
     try {
         await client.connect()
         app.listen(8080, function () {
-            console.log('listening on 8080')
+            console.log('listening on port 8080')
         })
     } finally {
         await client.close();
@@ -30,6 +30,7 @@ async function insertData(datas) {
         const currentDate = new Date().toISOString().substring(0, 10);
         datas.id = autoIncrement;
         datas.createdAt = currentDate;
+        datas.isCompleted = 'n';
         const insertResult = await collection.insertOne(datas);
         return insertResult;
     } catch (error) {
@@ -39,11 +40,36 @@ async function insertData(datas) {
     }
 
 }
+async function findData(where = {}) {
+    try {
+        await client.connect()
+        const database = client.db('todo');
+        const collection = database.collection('post');
+        const findResult = await collection.find(where).toArray();
+        return findResult;
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+    }
 
-app.get('/', function (req, res) {
-    res.render('index.ejs')
+}
+app.get('/', async function (req, res) {
+    const todoList = await findData();
+    res.render('index.ejs',{list:todoList});
 })
 
+app.get('/post', async function (req, res) {
+    try {
+        const where = req.query.isCompleted ? req.query : {}
+        const todoList = await findData(where);
+        console.log(todoList);
+        res.status(200).json({ list: todoList });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error });
+    }
+})
 app.post('/post', async function (req, res) {
     try {
         const result = await insertData(req.body);

@@ -92,78 +92,44 @@
                             <div class="tab-content" id="ex1-content">
                                 <!-- 전체 탭 -->
                                 <div class="tab-pane fade show active" id="all-tab" role="tabpanel" aria-labelledby="ex1-tab-1">
-                                    <ul class="list-group list-group-horizontal rounded-0 bg-transparent">
-                                        <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="form-check">
-                                                <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked1" aria-label="..." checked />
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                            <p class="lead fw-normal mb-0">블로그 포스팅</p>
-                                        </li>
-                                        <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="d-flex flex-row justify-content-end mb-1">
-                                                <a class="cursor-pointer text-info" data-mdb-toggle="tooltip" title="할 일 수정하기"><i class="fas fa-pencil-alt me-3"></i></a>
-                                                <a class="cursor-pointer text-danger" data-mdb-toggle="tooltip" title="할 일 삭제하기"><i class="fas fa-trash-alt"></i></a>
-                                            </div>
-                                            <div class="text-end text-muted">
-                                                <a class="cursor-pointer text-muted" data-mdb-toggle="tooltip" title="생성일">
-                                                    <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>2023년 7월 12일</p>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-group list-group-horizontal rounded-0">
-                                        <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="form-check">
-                                                <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                            <p class="lead fw-normal mb-0">치킨 먹기</p>
-                                        </li>
-                                        <li class="list-group-item px-3 py-1 d-flex align-items-center border-0 bg-transparent">
-                                            <div class="py-2 px-3 me-2 border border-warning rounded-3 d-flex align-items-center bg-light">
-                                                <p class="small mb-0">
-                                                    <a data-mdb-toggle="tooltip" title="마감일">
-                                                        <i class="fas fa-hourglass-half me-2 text-warning"></i>
-                                                    </a>
-                                                    2023년 7월 12일
-                                                </p>
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="d-flex flex-row justify-content-end mb-1">
-                                                <a class="cursor-pointer text-info" data-mdb-toggle="tooltip" title="할 일 수정하기"><i class="fas fa-pencil-alt me-3"></i></a>
-                                                <a class="cursor-pointer text-danger" data-mdb-toggle="tooltip" title="할 일 삭제하기"><i class="fas fa-trash-alt"></i></a>
-                                            </div>
-                                            <div class="text-end text-muted">
-                                                <a class="cursor-pointer text-muted" data-mdb-toggle="tooltip" title="생성일">
-                                                    <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>2023년 7월 12일</p>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <ul class="list-group list-group-horizontal rounded-0 mb-2">
-                                        <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="form-check">
-                                                <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked3" aria-label="..." />
-                                            </div>
-                                        </li>
-                                        <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                                            <p class="lead fw-normal mb-0 bg-light w-100 ms-n2 ps-2 py-1 rounded">프로젝트 회원가입 기능 만들기</p>
-                                        </li>
-                                        <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
-                                            <div class="d-flex flex-row justify-content-end mb-1">
-                                                <a class="cursor-pointer text-danger" data-mdb-toggle="tooltip" title="할 일 삭제하기"><i class="fas fa-trash-alt"></i></a>
-                                            </div>
-                                            <div class="text-end text-muted">
-                                                <a class="cursor-pointer text-muted" data-mdb-toggle="tooltip" title="생성일">
-                                                    <p class="small mb-0"><i class="fas fa-info-circle me-2"></i>2023년 7월 12일 </p>
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                    <% list.forEach(function(data) { %>
+                                        <% if(data.title) { %>
+                                            <ul class="list-group list-group-horizontal rounded-0">
+                                                <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                                                    <p class="lead fw-normal mb-0"><%=data.title%></p>
+                                                </li>
+                                                <% if(data.dueDate) {%>
+                                                    <li class="list-group-item px-3 py-1 d-flex align-items-center border-0 bg-transparent">
+                                                        <div class="py-2 px-3 me-2 border border-warning rounded-3 d-flex align-items-center bg-light">
+                                                            <p class="small mb-0">
+                                                                <a data-mdb-toggle="tooltip" title="마감일">
+                                                                    <i class="fas fa-hourglass-half me-2 text-warning"></i>
+                                                                </a>
+                                                            <%=data.dueDate%>
+                                                            </p>
+                                                        </div>
+                                                    </li>
+                                                <% } %>
+                                                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                                                    <div class="d-flex flex-row justify-content-end mb-1">
+                                                        <a class="cursor-pointer text-info" data-mdb-toggle="tooltip" title="할 일 수정하기"><i class="fas fa-pencil-alt me-3"></i></a>
+                                                        <a class="cursor-pointer text-danger" data-mdb-toggle="tooltip" title="할 일 삭제하기"><i class="fas fa-trash-alt"></i></a>
+                                                    </div>
+                                                    <div class="text-end text-muted">
+                                                        <a class="cursor-pointer text-muted" data-mdb-toggle="tooltip" title="생성일">
+                                                            <p class="small mb-0"><i class="fas fa-info-circle me-2"></i><%=data.createdAt%></p>
+                                                        </a>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        <% } %>
+                                     <%}); %> 
+                                    
                                 </div>
                                 <!-- 진행중 탭 -->
                                 <div class="tab-pane fade" id="active-tab" role="tabpanel" aria-labelledby="ex1-tab-2">
@@ -183,26 +149,47 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
     <script>
         const submitButton = document.getElementById('add-button');
+        const allTab = document.getElementById('ex1-tab-1');
+        const activeTab = document.getElementById('ex1-tab-2');
+        const completedTab = document.getElementById('ex1-tab-3');
+
         submitButton.addEventListener('click',()=>{
             const title = document.querySelector('.todo-title').value;
             const dueDate = document.querySelector('.due-date').value;
             const response = sendHttpRequest('POST', 'http://localhost:8080/post', {title:title, dueDate:dueDate}) 
         })
 
+        allTab.addEventListener('click',()=>{
+            const response = sendHttpRequest('GET', 'http://localhost:8080/post') 
+        })
+
+        activeTab.addEventListener('click',()=>{
+            const response = sendHttpRequest('GET', 'http://localhost:8080/post?isCompleted=n') 
+        })
+
+        completedTab.addEventListener('click',()=>{
+            const response = sendHttpRequest('GET', 'http://localhost:8080/post?isCompleted=y') 
+        })
+
+
         async function sendHttpRequest(method, url = '', data = {}) {
+            if (method === 'GET') {
+                const response = await fetch(url);
+                return response.json();
+            }
+
             const response = await fetch(url, {
-                method: method, 
-                mode: 'cors', 
+                method: method,
+                mode: 'cors',
                 cache: 'no-cache',
                 credentials: 'same-origin',
                 headers: {
-                    'Content-Type': 'application/json',
+                'Content-Type': 'application/json',
                 },
                 redirect: 'follow',
                 referrerPolicy: 'no-referrer',
                 body: JSON.stringify(data),
             });
-            return response.json();
         }
 
     </script>
