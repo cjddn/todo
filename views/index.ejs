@@ -157,6 +157,10 @@
             const title = document.querySelector('.todo-title').value;
             const dueDate = document.querySelector('.due-date').value;
             const response = sendHttpRequest('POST', 'http://localhost:8080/post', {title:title, dueDate:dueDate}) 
+            .then(()=>{
+                document.querySelector('.todo-title').value = null;
+                document.querySelector('.nav-link.active').click();
+            }).catch(error => console.log(error))
         })
 
         function readToDoList(tabContent, url) {
