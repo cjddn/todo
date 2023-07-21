@@ -52,7 +52,21 @@ async function findData(where = {}) {
     } finally {
         await client.close();
     }
-
+}
+async function updateData(id, update) {
+    try {
+        await client.connect()
+        const database = client.db('todo');
+        const collection = database.collection('post');  
+        const findData = await findData({id:id});
+        const _id = data[0]._id.toString();
+        const updateResult = await collection.collection('post').updateOne( {_id : _id}, {$set : update})
+        return updateResult;
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+    }
 }
 app.get('/', async function (req, res) {
     const todoList = await findData();
@@ -75,6 +89,18 @@ app.post('/post', async function (req, res) {
         const result = await insertData(req.body);
         console.log(result);
         res.status(200).json({ message: '저장 완료' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error });
+    }
+});
+
+app.put('/post', async function (req, res) {
+    try {
+        console.log(req.body.id, req.body.updateData);
+        const result = await insertData(req.body._id, req.body.updateData);
+        console.log(result);
+        res.status(200).json({ message: '수정 완료' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error });

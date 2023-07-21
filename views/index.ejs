@@ -94,7 +94,7 @@
                                 <div class="tab-pane fade show active" id="all-tab" role="tabpanel" aria-labelledby="ex1-tab-1">
                                     <% list.forEach(function(data) { %>
                                         <% if(data.title) { %>
-                                            <ul class="list-group list-group-horizontal rounded-0">
+                                            <ul data-id="<%=data.id%>" class="list-group list-group-horizontal rounded-0">
                                                 <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
                                                     <div class="form-check">
                                                         <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
@@ -182,7 +182,7 @@
                     `
                     if(data.title) { 
                         tabContent.insertAdjacentHTML('beforeend', `
-                            <ul class="list-group list-group-horizontal rounded-0">
+                            <ul data-id="${data.id}" class="list-group list-group-horizontal rounded-0">
                                 <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
                                     <div class="form-check">
                                         <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
