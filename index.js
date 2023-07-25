@@ -53,14 +53,14 @@ async function findData(where = {}) {
         await client.close();
     }
 }
-async function updateData(id, update) {
+async function updateData(id, updateData) {
     try {
+        var findResult = await findData({id:parseInt(id)});
+        const _id = findResult[0]._id;
         await client.connect()
         const database = client.db('todo');
-        const collection = database.collection('post');  
-        const findData = await findData({id:id});
-        const _id = data[0]._id.toString();
-        const updateResult = await collection.collection('post').updateOne( {_id : _id}, {$set : update})
+        const collection = database.collection('post'); 
+        const updateResult = await collection.updateOne( {_id : _id}, {$set : updateData})
         return updateResult;
     } catch (error) {
         console.log(error);
@@ -97,8 +97,7 @@ app.post('/post', async function (req, res) {
 
 app.put('/post', async function (req, res) {
     try {
-        console.log(req.body.id, req.body.updateData);
-        const result = await insertData(req.body._id, req.body.updateData);
+        const result = await updateData(req.body.id, req.body.updateData);
         console.log(result);
         res.status(200).json({ message: '수정 완료' });
     } catch (error) {
