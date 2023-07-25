@@ -1,0 +1,44 @@
+body{
+    font-family: "pretendard";
+}
+ul{
+    align-items: center;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+#list1 .form-control {
+    border-color: transparent;
+}
+
+#list1 .form-control:focus {
+    border-color: transparent;
+    box-shadow: none;
+}
+
+#list1 .select-input.form-control[readonly]:not([disabled]) {
+    background-color: #fbfbfb;
+}
+.picker{
+    border: none;
+    margin-right: 20px;
+}
+.picker::-webkit-datetime-edit{
+    display: none;
+}
+.picker::-webkit-calendar-picker-indicator{
+    width: 20px;
+    height: 20px;
+    background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Font_Awesome_5_solid_calendar-alt.svg/896px-Font_Awesome_5_solid_calendar-alt.svg.png");
+    filter: invert(46%) sepia(47%) saturate(852%) hue-rotate(179deg) brightness(82%) contrast(92%);
+}   
+.picker::-webkit-calendar-picker-indicator:focus-visible{
+    outline: none;
+    outline-offset: none;
+}
+.edit-input{
+    width: 100%;
+}
+.title-wrap{
+    height: 100%;
+}
