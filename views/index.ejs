@@ -66,7 +66,7 @@
                         <div class="card-body py-4 px-4 px-md-5">
                             <p class="h1 text-center mt-3 mb-4 pb-3 text-primary">
                                 <i class="fas fa-check-square me-1"></i>
-                                <!-- <u>김청우의 할 일 목록</u> -->
+                                <u>김청우의 할 일 목록</u>
                             </p>
                             <div class="pb-2">
                                 <div class="card">
@@ -252,6 +252,18 @@
             cancelIcon.setAttribute("onclick","deleteEvent(this)");
                 
         }
+        /**
+         * 삭제버튼 이벤트
+         * 
+         */
+         function deleteEvent(button){
+            const parent = button.closest('ul');
+            const titleWrap = parent.querySelector('.title-wrap');
+            const id = parent.dataset.id;
+            sendHttpRequest('DELETE','http://localhost:8080/post',{id: id})
+            .then(()=>parent.remove())
+        }
+
         function readToDoList(tabContent, url) {
             tabContent.innerHTML = '';
             sendHttpRequest('GET', url)

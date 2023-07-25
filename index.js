@@ -68,6 +68,21 @@ async function updateData(id, updateData) {
         await client.close();
     }
 }
+async function deleteData(id) {
+    try {
+        var findResult = await findData({id:parseInt(id)});
+        const _id = findResult[0]._id;
+        await client.connect()
+        const database = client.db('todo');
+        const collection = database.collection('post'); 
+        const deleteResult = await collection.deleteOne( {_id : _id});
+        return deleteResult;
+    } catch (error) {
+        console.log(error);
+    } finally {
+        await client.close();
+    }
+}
 app.get('/', async function (req, res) {
     const todoList = await findData();
     res.render('index.ejs',{list:todoList});
@@ -100,6 +115,17 @@ app.put('/post', async function (req, res) {
         const result = await updateData(req.body.id, req.body.updateData);
         console.log(result);
         res.status(200).json({ message: '수정 완료' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error });
+    }
+});
+
+app.delete('/post', async function (req, res) {
+    try {
+        const result = await deleteData(req.body.id);
+        console.log(result);
+        res.status(200).json({ message: '삭제 완료' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error });
