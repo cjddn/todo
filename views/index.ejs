@@ -106,7 +106,7 @@
                                             <ul data-is-completed="<%=data.isCompleted%>" data-id="<%=data.id%>" class="list-group list-group-horizontal rounded-0">
                                                 <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
                                                     <div class="form-check">
-                                                        <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
+                                                        <input <%=data.isCompleted == 'y' && 'checked'%> onclick="completeEvent(this)" class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
                                                     </div>
                                                 </li>
                                                 <li class="list-group-item title-wrap px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
@@ -162,6 +162,7 @@
         const activeTab = document.getElementById('ex1-tab-2');
         const completedTab = document.getElementById('ex1-tab-3');
 
+        //추가하기 클릭 이벤트
         submitButton.addEventListener('click',()=>{
             const title = document.querySelector('.todo-title').value;
             const dueDate = document.querySelector('.due-date').value;
@@ -172,6 +173,18 @@
             }).catch(error => console.log(error))
         })
 
+        //체크박스 눌렀을 때 완료 상태 변경시키는 이벤트
+        function completeEvent(button){
+            const parent = button.closest('ul');
+            const titleWrap = parent.querySelector('.title-wrap');
+            const id = parent.dataset.id;
+            //업데이트 반대로 변경(dataset은 스네이크 케이스 카멜로 가져올 수 있음)
+            const isCompleted = parent.dataset.isCompleted == 'n' ? 'y' : 'n';
+            sendHttpRequest('PUT','http://localhost:8080/post',{id: id, updateData: {isCompleted: isCompleted}})
+            .then(data=>console.log(data));
+        }    
+
+        //연필 버튼 눌렀을 때 이벤트
         function editEvent(button){
             const parent = button.closest('ul');
             const titleWrap = parent.querySelector('.title-wrap');
@@ -198,11 +211,11 @@
             editInput.setAttribute("class", "edit-input form-control form-control-lg");
             titleWrap.classList.add('card');
             titleWrap.replaceChild(editInput, pTag);
-
-
-            // })
         }
-        //수정 확인버튼
+        /**
+         * 수정 확인버튼
+         * 체크 버튼 누르면 변경사항 적용됨
+         */
         function checkEvent(button){
             const parent = button.closest('ul');
             const titleWrap = parent.querySelector('.title-wrap');
@@ -261,7 +274,7 @@
                             <ul data-id="${data.id}" data-is-completed="${data.isCompleted}" class="list-group list-group-horizontal rounded-0">
                                 <li class="list-group-item d-flex align-items-center ps-0 pe-3 py-1 rounded-0 border-0 bg-transparent">
                                     <div class="form-check">
-                                        <input class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
+                                        <input ${data.isCompleted == 'y' && 'checked'} onclick="completeEvent(this)" class="form-check-input me-0" type="checkbox" value="" id="flexCheckChecked2" aria-label="..." />
                                     </div>
                                 </li>
                                 <li class="list-group-item title-wrap px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
@@ -287,19 +300,22 @@
             .catch(error => console.log(error))
         }
 
+        //전체 탭
         allTab.addEventListener('click', () => {
             readToDoList(document.getElementById('all-tab'), 'http://localhost:8080/post')
         })
 
+        //진행중 탭
         activeTab.addEventListener('click', () => {
             readToDoList(document.getElementById('active-tab'), 'http://localhost:8080/post?isCompleted=n')
         })
 
-        completedTab.addEventListener('click', () => {
+        //완료 탭
+        completedTab.addEventListener('click', () => 
             readToDoList(document.getElementById('completed-tab'), 'http://localhost:8080/post?isCompleted=y')
-        })
+        )
 
-
+        //ajax 통신
         async function sendHttpRequest(method, url = '', data = {}) {
             if (method === 'GET') {
                 const response = await fetch(url);
