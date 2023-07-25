@@ -116,5 +116,4 @@ router.delete('/', async function (req, res) {
 });
 
 module.exports = router;
-module.exports.findData = findData;
 module.exports.client = client;

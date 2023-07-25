@@ -19,7 +19,6 @@ main().catch(console.dir);
 
 
 app.get('/', async function (req, res) {
-    const todoList = await postRouter.findData();
-    res.render('index.ejs',{list:todoList});
+    res.render('index.ejs');
 })
 

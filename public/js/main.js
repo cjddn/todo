@@ -3,6 +3,10 @@ const allTab = document.getElementById('ex1-tab-1');
 const activeTab = document.getElementById('ex1-tab-2');
 const completedTab = document.getElementById('ex1-tab-3');
 
+window.addEventListener('DOMContentLoaded',()=>{
+    readToDoList(document.getElementById('all-tab'), 'http://localhost:8080/post')
+})
+
 //추가하기 클릭 이벤트
 submitButton.addEventListener('click', () => {
     const title = document.querySelector('.todo-title').value;
