@@ -2,20 +2,21 @@ const submitButton = document.getElementById('add-button');
 const allTab = document.getElementById('ex1-tab-1');
 const activeTab = document.getElementById('ex1-tab-2');
 const completedTab = document.getElementById('ex1-tab-3');
+const apiUrl = "http://localhost:8080/post";
 
 window.addEventListener('DOMContentLoaded',()=>{
-    readToDoList(document.getElementById('all-tab'), 'http://localhost:8080/post')
+    readToDoList(document.getElementById('all-tab'), apiUrl)
 })
 
 //추가하기 클릭 이벤트
 submitButton.addEventListener('click', () => {
     const title = document.querySelector('.todo-title').value;
     const dueDate = document.querySelector('.due-date').value;
-    const response = sendHttpRequest('POST', 'http://localhost:8080/post', { title: title, dueDate: dueDate })
-        .then(() => {
-            document.querySelector('.todo-title').value = null;
-            document.querySelector('.nav-link.active').click();
-        }).catch(error => console.log(error))
+    const response = sendHttpRequest('POST', apiUrl, { title: title, dueDate: dueDate })
+    .then(() => {
+        document.querySelector('.todo-title').value = null;
+        document.querySelector('.nav-link.active').click();
+    }).catch(error => console.log(error))
 })
 
 //체크박스 눌렀을 때 완료 상태 변경시키는 이벤트
@@ -25,7 +26,7 @@ function completeEvent(button) {
     const id = parent.dataset.id;
     //업데이트 반대로 변경(dataset은 스네이크 케이스 카멜로 가져올 수 있음)
     const isCompleted = parent.dataset.isCompleted == 'n' ? 'y' : 'n';
-    sendHttpRequest('PUT', 'http://localhost:8080/post', { id: id, updateData: { isCompleted: isCompleted } })
+    sendHttpRequest('PUT', apiUrl, { id: id, updateData: { isCompleted: isCompleted } })
         .then(data => console.log(data));
 }
 
@@ -42,6 +43,7 @@ function editEvent(button) {
     pencilIcon.firstChild.classList.replace('fa-pencil-alt', 'fa-check');
     pencilIcon.classList.replace('edit-button', 'check-button');
     pencilIcon.setAttribute("onclick", "checkEvent(this)");
+
     //휴지통 아이콘을 x 아이콘으로 바꾸고 클래스 명 변경, 툴팁 제거, 클릭이벤트 함수 변경
     trashIcon.removeAttribute("data-mdb-original-title");
     trashIcon.classList.replace('delete-button', 'cancel-button');
@@ -66,7 +68,7 @@ function checkEvent(button) {
     const titleWrap = parent.querySelector('.title-wrap');
     const inputTag = titleWrap.querySelector("input");
     const id = parent.dataset.id;
-    sendHttpRequest('PUT', 'http://localhost:8080/post', { id: id, updateData: { title: inputTag.value } })
+    sendHttpRequest('PUT', apiUrl, { id: id, updateData: { title: inputTag.value } })
         .then(() => cancelEvent(button, inputTag.value))
 }
 /**
@@ -105,7 +107,7 @@ function deleteEvent(button) {
     const parent = button.closest('ul');
     const titleWrap = parent.querySelector('.title-wrap');
     const id = parent.dataset.id;
-    sendHttpRequest('DELETE', 'http://localhost:8080/post', { id: id })
+    sendHttpRequest('DELETE', apiUrl, { id: id })
         .then(() => parent.remove())
 }
 
@@ -159,17 +161,17 @@ function readToDoList(tabContent, url) {
 
 //전체 탭
 allTab.addEventListener('click', () => {
-    readToDoList(document.getElementById('all-tab'), 'http://localhost:8080/post')
+    readToDoList(document.getElementById('all-tab'), apiUrl)
 })
 
 //진행중 탭
 activeTab.addEventListener('click', () => {
-    readToDoList(document.getElementById('active-tab'), 'http://localhost:8080/post?isCompleted=n')
+    readToDoList(document.getElementById('active-tab'), `${apiUrl}?isCompleted=n`)
 })
 
 //완료 탭
 completedTab.addEventListener('click', () =>
-    readToDoList(document.getElementById('completed-tab'), 'http://localhost:8080/post?isCompleted=y')
+    readToDoList(document.getElementById('completed-tab'), `${apiUrl}?isCompleted=y`)
 )
 
 //ajax 통신

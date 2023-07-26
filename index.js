@@ -19,6 +19,6 @@ main().catch(console.dir);
 
 
 app.get('/', async function (req, res) {
-    res.render('index.ejs');
+    res.sendFile(__dirname+'/views/index.html');
 })
 
