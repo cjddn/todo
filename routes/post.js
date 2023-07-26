@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express')
 const router = express.Router();
 const { MongoClient } = require("mongodb");
 require("dotenv").config();
@@ -9,6 +9,7 @@ const { UUID } = require('bson');
 const client = new MongoClient(uri, {
     pkFactory: { createPk: () => new UUID().toBinary() }
 });
+
 async function insertData(datas) {
     try {
         await client.connect()
@@ -40,37 +41,9 @@ async function findData(where = {}) {
     } finally {
         await client.close();
     }
+
 }
-async function updateData(id, updateData) {
-    try {
-        const findResult = await findData({id:parseInt(id)});
-        const _id = findResult[0]._id;
-        await client.connect();
-        const database = client.db('todo');
-        const collection = database.collection('post'); 
-        const updateResult = await collection.updateOne( {_id : _id}, {$set : updateData});
-        return updateResult;
-    } catch (error) {
-        console.log(error);
-    } finally {
-        await client.close();
-    }
-}
-async function deleteData(id) {
-    try {
-        const findResult = await findData({id:parseInt(id)});
-        const _id = findResult[0]._id;
-        await client.connect();
-        const database = client.db('todo');
-        const collection = database.collection('post'); 
-        const deleteResult = await collection.deleteOne( {_id : _id});
-        return deleteResult;
-    } catch (error) {
-        console.log(error);
-    } finally {
-        await client.close();
-    }
-}
+
 router.get('/', async function (req, res) {
     try {
         const where = req.query.isCompleted ? req.query : {}
@@ -87,28 +60,6 @@ router.post('/', async function (req, res) {
         const result = await insertData(req.body);
         console.log(result);
         res.status(200).json({ message: '저장 완료' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error });
-    }
-});
-
-router.put('/', async function (req, res) {
-    try {
-        const result = await updateData(req.body.id, req.body.updateData);
-        console.log(result);
-        res.status(200).json({ message: '수정 완료' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error });
-    }
-});
-
-router.delete('/', async function (req, res) {
-    try {
-        const result = await deleteData(req.body.id);
-        console.log(result);
-        res.status(200).json({ message: '삭제 완료' });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: error });

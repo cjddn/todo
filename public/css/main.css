@@ -1,9 +1,6 @@
 body{
     font-family: "pretendard";
 }
-ul{
-    align-items: center;
-}
 .cursor-pointer{
     cursor: pointer;
 }
@@ -35,10 +32,4 @@ ul{
 .picker::-webkit-calendar-picker-indicator:focus-visible{
     outline: none;
     outline-offset: none;
-}
-.edit-input{
-    width: 100%;
-}
-.title-wrap{
-    height: 100%;
 }
